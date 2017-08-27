@@ -12,5 +12,8 @@ var BankSchema = new Schema({
     currency:  String
    }]},
   city: {type: String}
-});
+}, {collection: 'bank_data'});
+
+BankSchema.plugin(require('mongoose-paginate'))
+
 module.exports = mongoose.model('Bank_data', BankSchema);

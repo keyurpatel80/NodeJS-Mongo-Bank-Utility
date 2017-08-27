@@ -4,7 +4,10 @@ var express = require('express'),
   mongoose = require('mongoose'),
   Bank_data = require('./api/models/BankModel'), //created model loading here
   bodyParser = require('body-parser');
-  
+ 
+var paginate = require('express-paginate');
+app.use(paginate.middleware(10, 50));
+ 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/test/bank_data')

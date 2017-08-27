@@ -3,10 +3,12 @@ module.exports = function(app) {
   var bank_data_list = require('../controllers/BankController');
 
   // bank_data_list Routes
-  app.route('/accounts')
+  app.route('/accounts/')
     .get(bank_data_list.list_all_data)
     .post(bank_data_list.create_a_account);
 
+  app.route('/accounts/:id')
+     .get(bank_data_list.list_by_account_id);
 
   //app.route('/accounts/:accountId')
  //   .get(bank_data_list.read_a_account)
