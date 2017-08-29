@@ -34,15 +34,16 @@ exports.list_all_data = function(req, res, next) {
 
 
 exports.list_by_account_id = function(req, res) {
-    BankTask.find({_id: new ObjectId(req.params.id)}, function(err, accounts) {
-    res.json(accounts);
-    });
+       BankTask.find({_id: new ObjectId(req.params.id)}, function(err, accounts) {
+       res.json(accounts);
+       });
 };
+
 
 exports.list_id_by_accounts = function(req, res) {
    console.log(req.query.currency);
    if (req.query.currency){
-      BankTask.aggregate({$match:{_id: new ObjectId(req.params.id)}}, {$unwind: "$accounts"}, {$match: {"accounts.currency": req.query.currency}}, function(err, accounts) {
+      BankTask.aggregate({$match:{_id: new ObjectId(req.params.id)}}, {$unwind: "$accounts"}, {$match: {"accounts.currency": req.query.currency}} , function(err, accounts) {
       res.json(accounts);
       });
    }
@@ -52,6 +53,18 @@ exports.list_id_by_accounts = function(req, res) {
       });
    }
   };
+
+
+exports.add_account = function(req, res) {
+    BankTask.update({_id:ObjectId(req.params.id)},{ "$push": {"accounts": req.body}}, {upsert: false}, function(err, accounts){
+      if (accounts.ok === 1 && accounts.nModified === 1) {
+         res.json("Account added");
+      }
+      else{
+         res.json("Error");
+      }
+   });
+};
 
 exports.create_a_account = function(req, res) {
   var new_account = new BankTask(req.body);
@@ -63,5 +76,22 @@ exports.create_a_account = function(req, res) {
 };
 
 
+exports.list_sorted_accounts = function(req, res) {
+  if (req.query.limit) {
+         BankTask.aggregate({$unwind: "$accounts"},{$group: {_id:"$_id", "accountbalance":{ $sum: "$accounts.account_balance"}}},  {$sort: {accountbalance: -1}},{ $limit : req.query.limit }, function(err,accounts){
+        res.json(accounts);
+    });
+  }
+  else {
+        BankTask.aggregate({$unwind: "$accounts"},{$group: {_id:"$_id", "accountbalance":{ $sum: "$accounts.account_balance"}}},  {$sort: {accountbalance: -1}}, function(err,accounts){
+        res.json(accounts);
+    });
+  }
+};
+ 
 
-
+exports.list_avg_balance = function(req, res) { 
+      BankTask.aggregate({$unwind: "$accounts"},{$group: {_id:null, "accountbalance":{ $avg: "$accounts.account_balance"}}},{$sort:{"accountbalance":-1}}, { $limit : 5 }, function(err, accounts) {
+         res.json(accounts);
+     });
+   };

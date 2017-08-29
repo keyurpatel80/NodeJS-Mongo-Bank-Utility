@@ -9,9 +9,18 @@ module.exports = function(app) {
 
   app.route('/customers/:id')
      .get(bank_data_list.list_by_account_id);
+  
+  app.route('/accounts/avg_balance')
+     .get(bank_data_list.list_avg_balance);
 
   app.route('/customers/:id/:accounts')
-     .get(bank_data_list.list_id_by_accounts);
+     .get(bank_data_list.list_id_by_accounts)
+     .post(bank_data_list.add_account);
+
+
+  app.route('/accounts/sorted/')
+     .get(bank_data_list.list_sorted_accounts);
+
 
   //app.route('/accounts/:accountId')
  //   .get(bank_data_list.read_a_account)

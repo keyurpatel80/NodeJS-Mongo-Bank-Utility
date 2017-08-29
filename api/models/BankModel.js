@@ -9,7 +9,8 @@ var BankSchema = new Schema({
   accounts: { type: [{
     account_type: String,
     account_balance: Number,
-    currency:  String
+    currency:  String,
+     _id: false 
    }]},
   city: {type: String}
 }, {collection: 'bank_data'});
