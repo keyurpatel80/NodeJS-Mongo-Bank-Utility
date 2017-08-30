@@ -5,11 +5,13 @@ module.exports = function(app) {
   // bank_data_list Routes
   app.route('/customers/')
     .get(bank_data_list.list_all_data)
-    .post(bank_data_list.create_a_account);
+    .post(bank_data_list.create_a_account)
+    .put(bank_data_list.update_customers); 
 
   app.route('/customers/:id')
-     .get(bank_data_list.list_by_account_id);
-  
+     .get(bank_data_list.list_by_account_id)
+     .delete(bank_data_list.delete_customer)
+
   app.route('/accounts/avg_balance')
      .get(bank_data_list.list_avg_balance);
 

@@ -32,6 +32,30 @@ exports.list_all_data = function(req, res, next) {
   }
 };
 
+exports.update_customers = function(req, res) {
+       console.log(req.body);
+       BankTask.updateMany({}, {$set: {"SSN":"XXX"}}, {multi: true}, function(err, accounts){
+           if (err) {
+              console.log("Error");
+           }
+           else{
+           res.json(accounts);
+           }
+       });
+      };
+
+exports.delete_customer = function(req, res) {
+       console.log(req.params.id);
+       BankTask.remove({"_id" : new ObjectId(req.params.id)}, function(err, accounts){
+           if (err) { 
+              console.log("Error");
+           }
+           else{
+           res.json(accounts);
+           }
+         });
+       };
+
 
 exports.list_by_account_id = function(req, res) {
        BankTask.find({_id: new ObjectId(req.params.id)}, function(err, accounts) {
@@ -91,7 +115,15 @@ exports.list_sorted_accounts = function(req, res) {
  
 
 exports.list_avg_balance = function(req, res) { 
-      BankTask.aggregate({$unwind: "$accounts"},{$group: {_id:null, "accountbalance":{ $avg: "$accounts.account_balance"}}},{$sort:{"accountbalance":-1}}, { $limit : 5 }, function(err, accounts) {
+     if (req.query.limit) {
+         BankTask.aggregate({$unwind: "$accounts"},{$group: {_id:"$_id", "accountbalance":{ $sum: "$accounts.account_balance"}}},{$sort:{"accountbalance":-1}}, { $limit : req.query.limit }, function(err, accounts) {
          res.json(accounts);
-     });
-   };
+       });
+     }
+     else{
+       BankTask.aggregate({$unwind: "$accounts"},{$group: {_id:"$_id", "accountbalance":{ $sum: "$accounts.account_balance"}}},{$sort:{"accountbalance":-1}}, function(err, accounts) {
+         res.json(accounts);
+      });
+     }
+  };
+  

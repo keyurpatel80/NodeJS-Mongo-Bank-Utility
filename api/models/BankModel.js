@@ -1,5 +1,4 @@
 
-'use strict';
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -12,8 +11,9 @@ var BankSchema = new Schema({
     currency:  String,
      _id: false 
    }]},
-  city: {type: String}
-}, {collection: 'bank_data'});
+  city: {type: String},
+  SSN: {type: String}
+}, {collection: 'bank_data'},{ strict: false });
 
 BankSchema.plugin(require('mongoose-paginate'))
 
