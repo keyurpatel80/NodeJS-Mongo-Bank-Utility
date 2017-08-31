@@ -1,14 +1,12 @@
 
+This small project is developed to demonstrate the how API is developed using ExpressJS and MongoDB. I have used MongoDB version 3.2.7 and Expressjs 5.3.0. To connect to MongoDB I have used Mongoose object modeling for Express.
 
-# CRUD API in ExpressJS and MongoDB
-
-This repository contains sources of API for Create, update, delete and Read bank accounts from bank_Data.json file which is MongoDB collection.
-
-I have used ExpressJS for creating APIs.
+This repository contains sources of API for Create, update, delete and Read bank accounts from bank_Data.json file which is MongoDB collection. You can find bank_data.json file /db folder which can you install it in your local machine.
 
 ## What's in it?
 
-Here is the list of APIs supported:
+#Here is the list of APIs supported:
+
 - GET /api/customers - List all the customers in the bank.
 
 - GET /api/customers/:id - list specific customer by id.
@@ -28,7 +26,6 @@ Here is the list of APIs supported:
 - PUT /api/customers - Update customers to add new fields.
 
 
-## How to create new account?
+#Feel free to raise issues or add new features. 
 
-- POST /accounts  
-
+#You can reach me at keyurpatel80@gmail.com for any questions.
