@@ -5,7 +5,8 @@ This repository contains sources of API for Create, update, delete and Read bank
 
 ## What's in it?
 
-#Here is the list of APIs supported:
+# APIs
+# Here is the list of APIs supported:
 
 - GET /api/customers - List all the customers in the bank.
 
@@ -24,6 +25,10 @@ This repository contains sources of API for Create, update, delete and Read bank
 - DELETE /api/customers/:id - delete specific customer.
 
 - PUT /api/customers - Update customers to add new fields.
+
+# DB
+
+This database has around 52000 customers' records and size is 24 MB. 
 
 
 #Feel free to raise issues or add new features. 
